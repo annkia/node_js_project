@@ -1,0 +1,14 @@
+{
+  "name": "node_js_project",
+  "version": "1.0.0",
+  "description": "Project is simple REST service which will return details of a Github repository",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "author": "Anna Olender",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.88.2"
+  }
+}
