@@ -21,4 +21,5 @@ async function getUsers() {
     console.log(error.message);
   }
 }
+
 getUsers();
