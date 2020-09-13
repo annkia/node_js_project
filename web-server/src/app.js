@@ -2,13 +2,29 @@
 //load express, configure up and start server
 
 const express = require("express");
+const getRepo = require("./getRepo");
 
 const app = express();
 
-//sepcify server response when someone want to get specific route
-app.get("", (req, res) => {
+//specify server response when someone want to get specific route
+app.get("/repositories", (req, res) => {
+  //info about query string lives in req argument.
+  if (!req.query.owner) {
+    return res.send({
+      message: "Please provide owner name",
+    });
+  }
+
+  if (!req.query.repository_name) {
+    return res.send({
+      message: "Please  provide repository_name",
+    });
+  }
+
+  getRepo(req.query.owner, req.query.repository_name);
+
   res.send({
-    fullName: "...",
+    fullName: `${req.query.owner}/${req.query.repository_name}`,
     description: "...",
     cloneUrl: "...",
     stars: 0,
