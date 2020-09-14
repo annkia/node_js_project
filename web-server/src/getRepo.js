@@ -21,7 +21,7 @@ const getRepo = (owner, repository_name, callback) => {
     if (error) {
       callback("Unable to connect with service");
     } else {
-      callback(repositoryInfo);
+      callback(undefined, repositoryInfo);
     }
   });
 };

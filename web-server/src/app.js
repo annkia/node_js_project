@@ -7,7 +7,7 @@ const getRepo = require("./getRepo");
 const app = express();
 
 //specify server response when someone want to get specific route
-app.get("/repositories", (req, res) => {
+app.get("/repositories", async (req, res) => {
   //info about query string lives in req argument
   if (!req.query.owner) {
     return res.send({
@@ -21,20 +21,24 @@ app.get("/repositories", (req, res) => {
     });
   }
 
-  getRepo(
-    req.query.owner,
-    req.query.repository_name,
-    (repositoryInfo, error) => {
-      //use callback to return data from async function getRepo
-      res.send({
-        fullName: repositoryInfo.fullName,
-        description: repositoryInfo.description,
-        cloneUrl: repositoryInfo.url,
-        stars: repositoryInfo.stars,
-        createdAt: repositoryInfo.createdAt,
-      });
-    }
-  );
+  try {
+    await getRepo(
+      req.query.owner,
+      req.query.repository_name,
+      (error, repositoryInfo) => {
+        //use callback to return data from async function getRepo
+        res.send({
+          fullName: repositoryInfo.fullName,
+          description: repositoryInfo.description,
+          cloneUrl: repositoryInfo.url,
+          stars: repositoryInfo.stars,
+          createdAt: repositoryInfo.createdAt,
+        });
+      }
+    );
+  } catch (error) {
+    res.send("Unable to fetch data");
+  }
 });
 
 app.get("*", (req, res) => {
