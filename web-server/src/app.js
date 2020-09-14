@@ -21,16 +21,20 @@ app.get("/repositories", (req, res) => {
     });
   }
 
-  getRepo(req.query.owner, req.query.repository_name, (repositoryInfo) => {
-    //use callback to return data from async function getRepo
-    res.send({
-      fullName: repositoryInfo.fullName,
-      description: repositoryInfo.description,
-      cloneUrl: repositoryInfo.url,
-      stars: repositoryInfo.stars,
-      createdAt: repositoryInfo.createdAt,
-    });
-  });
+  getRepo(
+    req.query.owner,
+    req.query.repository_name,
+    (repositoryInfo, error) => {
+      //use callback to return data from async function getRepo
+      res.send({
+        fullName: repositoryInfo.fullName,
+        description: repositoryInfo.description,
+        cloneUrl: repositoryInfo.url,
+        stars: repositoryInfo.stars,
+        createdAt: repositoryInfo.createdAt,
+      });
+    }
+  );
 });
 
 app.get("*", (req, res) => {

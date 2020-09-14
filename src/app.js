@@ -10,13 +10,12 @@ const getRepo = (owner, repository_name) => {
     headers: {
       "User-Agent": "postman-request",
     },
+    json: true,
   };
+
   const getDetails = (error, response, body) => {
     try {
-      const info = JSON.parse(body);
-      console.log(
-        `Stars ${info.stargazers_count}, full name ${info.full_name}, url ${info.url}, created ${info.created_at}`
-      );
+      const info = body;
     } catch (error) {
       console.log(error.message);
     }
