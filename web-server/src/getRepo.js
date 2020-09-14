@@ -1,6 +1,6 @@
 const request = require("postman-request");
 
-const getRepo = (owner, repository_name) => {
+const getRepo = (owner, repository_name, callback) => {
   let repositoryInfo;
   const options = {
     url: `https://api.github.com/repos/${owner}/${repository_name}`,
@@ -11,22 +11,19 @@ const getRepo = (owner, repository_name) => {
   const getDetails = (error, response, body) => {
     try {
       const info = JSON.parse(body);
-      console.log(
-        `Stars ${info.stargazers_count}, full name ${info.full_name}, url ${info.url}, created ${info.created_at}`
-      );
       repositoryInfo = {
-        starts: info.stargazers_count,
-        fullName: info.fullName,
+        fullName: info.full_name,
+        description: info.description,
         url: info.url,
+        stars: info.stargazers_count,
         createdAt: info.created_at,
       };
-      return repositoryInfo;
+      callback(repositoryInfo);
     } catch (error) {
       console.log(error.message);
     }
   };
   request(options, getDetails);
-  return repositoryInfo;
 };
 
 module.exports = getRepo;
